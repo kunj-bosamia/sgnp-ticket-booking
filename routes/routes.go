@@ -5,9 +5,10 @@ import (
 	"github.com/kunjbosamia/sgnp-ticket-booking/controllers"
 )
 
-func RegisterRoutes(router *gin.Engine) {
+func SetupRoutes(router *gin.Engine) {
 	v1 := router.Group("/api/v1")
 	{
+		v1.GET("/whatsapp/webhook", controllers.WhatsAppWebhookVerifyHandler)
 		v1.POST("/whatsapp/webhook", controllers.WhatsAppWebhookHandler)
 	}
 }
