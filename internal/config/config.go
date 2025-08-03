@@ -16,6 +16,7 @@ type Config struct {
 	JWTSecret      string
 	DBPoolMaxConns int
 	DBPoolMinConns int
+	VerifyToken    string
 }
 
 var AppConfig Config
@@ -31,6 +32,7 @@ func LoadConfig() {
 		JWTSecret:      getEnv("JWT_SECRET", "devsecret"),
 		DBPoolMaxConns: getEnvAsInt("DB_POOL_MAX_CONNS", 20),
 		DBPoolMinConns: getEnvAsInt("DB_POOL_MIN_CONNS", 5),
+		VerifyToken:    mustGetEnv("VERIFY_TOKEN"),
 	}
 }
 
@@ -43,9 +45,18 @@ func getEnv(key, defaultVal string) string {
 	return val
 }
 
+func mustGetEnv(key string) string {
+	val := os.Getenv(key)
+	if val == "" {
+		log.Fatalf("Required environment variable %s is not set", key)
+	}
+	return val
+}
+
 func getEnvAsInt(key string, defaultVal int) int {
 	valStr := os.Getenv(key)
 	if valStr == "" {
+		log.Printf("Env %s not found. Using default: %d", key, defaultVal)
 		return defaultVal
 	}
 	val, err := strconv.Atoi(valStr)
