@@ -7,6 +7,7 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/kunjbosamia/sgnp-ticket-booking/internal/config"
 	"github.com/kunjbosamia/sgnp-ticket-booking/internal/db"
+	"github.com/kunjbosamia/sgnp-ticket-booking/routes"
 )
 
 func main() {
@@ -19,6 +20,7 @@ func main() {
 	db.InitDB()
 
 	r := gin.Default()
+	routes.SetupRoutes(r)
 
 	// TODO: Add middleware and route registration
 	if err := r.Run(":" + config.AppConfig.Port); err != nil {
