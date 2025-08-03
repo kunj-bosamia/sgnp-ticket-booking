@@ -23,5 +23,5 @@ CREATE INDEX idx_order_order_id ON orders(order_id);
 CREATE TABLE rates (
     id SERIAL PRIMARY KEY,
     item_type VARCHAR(20),
-    DECIMAL(10, 2) NOT NULL DEFAULT 0.00
+    price_per_unit DECIMAL(10, 2) NOT NULL DEFAULT 0.00
 );
