@@ -6,6 +6,12 @@ import (
 )
 
 func SetupRoutes(router *gin.Engine) {
+
+	root := router.Group("/")
+	{
+		root.GET("health", controllers.HealthHandler)
+	}
+
 	v1 := router.Group("/api/v1")
 	{
 		v1.GET("/whatsapp/webhook", controllers.WhatsAppWebhookVerifyHandler)
